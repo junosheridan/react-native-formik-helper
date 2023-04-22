@@ -42,7 +42,7 @@
     "android"
   ],
   "repository": "https://github.com/junosheridan/react-native-formik-helper",
-  "author": "Juno <juno.sheridan@gmail.com> (https://github.com/junosheridan/react-native-formik-helper)",
+  "author": "Juno Sheridan <juno.sheridan@gmail.com> (https://junosheridan.github.io)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/junosheridan/react-native-formik-helper/issues"
@@ -52,8 +52,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@evilmartians/lefthook": "^1.2.2",
     "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.2.2",
     "@react-native-community/eslint-config": "^3.0.2",
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^28.1.2",
@@ -127,7 +127,10 @@
           "singleQuote": true,
           "tabWidth": 2,
           "trailingComma": "es5",
-          "useTabs": false
+          "useTabs": false,
+          "bracketSpacing": true,
+          "semi": false,
+          "printWidth": 120
         }
       ]
     }
@@ -141,7 +144,10 @@
     "singleQuote": true,
     "tabWidth": 2,
     "trailingComma": "es5",
-    "useTabs": false
+    "useTabs": false,
+    "bracketSpacing": true,
+    "semi": false,
+    "printWidth": 120
   },
   "react-native-builder-bob": {
     "source": "src",

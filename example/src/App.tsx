@@ -1,12 +1,11 @@
 import * as React from 'react';
 
 import { StyleSheet, View } from 'react-native';
-import { FormikHelperView } from 'react-native-formik-helper';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <FormikHelperView color="#32a852" style={styles.box} />
+      {}
     </View>
   );
 }
