@@ -6,21 +6,14 @@ import { Form, Metrics } from 'react-native-formik-helper'
 export default function App() {
   return (
     <ScrollView keyboardShouldPersistTaps="handled" style={styles.container} contentContainerStyle={styles.content}>
-      <Form
-        initialValues={{}}
-        onSubmit={() => {}}
-        submitButtonTitle="Confirm"
-        Fields={
-          <>
-            <Text>Hello world</Text>
-            <TextInput style={styles.field} />
-            <Text>Hello world</Text>
-            <TextInput style={styles.field} />
-            <Text>Hello world</Text>
-            <TextInput style={styles.field} />
-          </>
-        }
-      />
+      <Form initialValues={{}} onSubmit={() => {}} submitButtonTitle="Confirm">
+        <Text>Hello world</Text>
+        <TextInput style={styles.field} />
+        <Text>Hello world</Text>
+        <TextInput style={styles.field} />
+        <Text>Hello world</Text>
+        <TextInput style={styles.field} />
+      </Form>
     </ScrollView>
   )
 }
