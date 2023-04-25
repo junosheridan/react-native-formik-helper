@@ -1,5 +1,5 @@
 import type { FormikConfig, FormikValues } from 'formik'
-import { FunctionComponent, ReactNode } from 'react'
+import { FunctionComponent } from 'react'
 import type { ViewStyle, StyleProp } from 'react-native'
 import { ImageStyle } from 'react-native'
 import { TouchableOpacityProps } from 'react-native'
@@ -31,13 +31,14 @@ export interface SubmitButtonProps
 }
 
 export interface Props<T extends FormikValues>
-  extends FormikConfig<T>,
+  extends Omit<FormikConfig<T>, 'children'>,
     FormErrorProps,
     SubmitButtonProps,
     Pick<Styles, 'containerStyle'> {
   useDefaultFormError?: boolean
   useDefaultSubmitButton?: boolean
-  Fields?: ReactNode | ReactNode[]
+  renderHeader?: FormikConfig<T>['children']
+  renderFooter?: FormikConfig<T>['children']
   FormError?: FunctionComponent<FormErrorProps>
   SubmitButton?: FunctionComponent<SubmitButtonProps>
 }

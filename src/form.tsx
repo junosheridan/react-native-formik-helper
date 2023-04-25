@@ -1,5 +1,14 @@
 import { Formik, FormikHelpers, FormikProps, FormikValues } from 'formik'
-import React, { ReactElement, cloneElement, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, {
+  PropsWithChildren,
+  ReactElement,
+  cloneElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 import { Props, StateFieldRefs } from './types'
 import { Keyboard } from 'react-native'
@@ -23,15 +32,16 @@ export function Form<T extends FormikValues>({
   submitButtonTitle,
   submitButtonStyle,
   submitButtonTitleStyle,
-  Fields,
   FormError = DefaultFormError,
   SubmitButton = DefaultSubmitButton,
+  renderHeader,
+  renderFooter,
   ...rest
-}: Props<T>) {
+}: PropsWithChildren<Props<T>>) {
   const formikRef = useRef<FormikProps<T>>(null)
   const [fieldRefs, setFieldRefs] = useState<StateFieldRefs>([])
 
-  const inputFields = useMemo(() => getInputFields(Fields), [Fields])
+  const inputFields = useMemo(() => getInputFields(children), [children])
 
   const handleFieldFocus = useCallback(
     (index: number) => {
@@ -101,6 +111,7 @@ export function Form<T extends FormikValues>({
     <Formik<T> {...rest} innerRef={formikRef} onSubmit={onSubmit}>
       {({ isValid, handleSubmit, ...props }) => (
         <SafeAreaView style={containerStyle}>
+          {typeof renderHeader === 'function' ? renderHeader({ isValid, handleSubmit, ...props }) : renderHeader}
           {autoFocusFields}
           {useDefaultFormError && (
             <FormError
@@ -122,7 +133,7 @@ export function Form<T extends FormikValues>({
               submitButtonTitleStyle={submitButtonTitleStyle}
             />
           )}
-          {typeof children === 'function' ? children({ isValid, handleSubmit, ...props }) : children}
+          {typeof renderFooter === 'function' ? renderFooter({ isValid, handleSubmit, ...props }) : renderFooter}
         </SafeAreaView>
       )}
     </Formik>

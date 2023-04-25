@@ -12,9 +12,8 @@ export default StyleSheet.create({
     marginRight: Metrics.xs,
   },
   errorContainer: {
-    marginVertical: Metrics.xs,
-    paddingVertical: Metrics.small,
-    paddingHorizontal: Metrics.xs,
+    marginTop: Metrics.small,
+    padding: Metrics.xs,
     borderRadius: Metrics.tiny,
     flexDirection: 'row',
     alignItems: 'center',

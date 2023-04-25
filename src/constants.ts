@@ -1,6 +1,6 @@
 export const Colors = {
   white: 'white',
-  error: 'crimson',
+  error: '#B22D1D',
   success: 'forestgreen',
 }
 export const Metrics = {
