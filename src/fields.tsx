@@ -65,7 +65,6 @@ export const withTextInputField = (WrappedComponent: WrappedComponentType) =>
       return (
         <WrappedComponent
           ref={ref}
-          isError={!!errors[name]}
           error={errors[name]}
           value={values[name]}
           onChangeText={onChangeText}
