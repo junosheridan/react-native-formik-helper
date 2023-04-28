@@ -1,6 +1,7 @@
 import type { FormikConfig, FormikValues } from 'formik'
 import { FunctionComponent } from 'react'
 import type { ViewStyle, StyleProp } from 'react-native'
+import { NativeMethods } from 'react-native'
 import { ImageStyle } from 'react-native'
 import { TouchableOpacityProps } from 'react-native'
 import { TextStyle } from 'react-native'
@@ -30,7 +31,7 @@ export interface SubmitButtonProps
   onPress?: () => void
 }
 
-export interface Props<T extends FormikValues>
+export interface FormProps<T extends FormikValues>
   extends Omit<FormikConfig<T>, 'children'>,
     FormErrorProps,
     SubmitButtonProps,
@@ -43,4 +44,4 @@ export interface Props<T extends FormikValues>
   SubmitButton?: FunctionComponent<SubmitButtonProps>
 }
 
-export type StateFieldRefs = Array<{ focus?: () => void }>
+export interface InputRef extends Partial<Pick<NativeMethods, 'focus' | 'blur'>> {}
