@@ -1,18 +1,19 @@
 import React, { Ref, forwardRef, useCallback, useMemo } from 'react'
 import { WrappedComponentType, TextInputFieldProps, InputRef } from './types'
 import { useFormikContext } from 'formik'
+import type { TextInputProps } from 'react-native'
 
-export const withTextInputField = (WrappedComponent: WrappedComponentType) =>
-  forwardRef(
+export function withTextInputField<T extends TextInputProps>(WrappedComponent: WrappedComponentType) {
+  return forwardRef(
     (
-      { name, type, onChangeText: propOnChangeText, onBlur: propOnBlur, ...rest }: TextInputFieldProps,
+      { name, type, onChangeText: propOnChangeText, onBlur: propOnBlur, ...rest }: TextInputFieldProps & T,
       ref: Ref<InputRef>
     ) => {
       const { errors, values, setFieldValue, setFieldTouched, isSubmitting } =
         useFormikContext<Record<string, string>>()
 
       const defaultProps = useMemo((): Pick<
-        TextInputFieldProps,
+        T,
         'keyboardType' | 'secureTextEntry' | 'autoCorrect' | 'autoCapitalize'
       > => {
         if (type === 'email') {
@@ -48,10 +49,10 @@ export const withTextInputField = (WrappedComponent: WrappedComponentType) =>
 
       const onChangeText = useCallback(
         (text) => {
-          setFieldValue(name, text)
+          setFieldValue(name, text, !isSubmitting)
           propOnChangeText?.(text)
         },
-        [propOnChangeText, name, setFieldValue]
+        [propOnChangeText, name, setFieldValue, isSubmitting]
       )
 
       const onBlur = useCallback(
@@ -74,3 +75,4 @@ export const withTextInputField = (WrappedComponent: WrappedComponentType) =>
       )
     }
   )
+}

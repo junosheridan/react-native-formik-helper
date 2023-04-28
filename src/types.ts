@@ -1,6 +1,6 @@
 import type { FormikConfig, FormikValues } from 'formik'
 import { ElementType, ForwardRefExoticComponent, FunctionComponent, PropsWithoutRef, RefAttributes } from 'react'
-import type { ViewStyle, StyleProp, TextInputProps } from 'react-native'
+import type { ViewStyle, StyleProp } from 'react-native'
 import { NativeMethods } from 'react-native'
 import { ImageStyle } from 'react-native'
 import { TouchableOpacityProps } from 'react-native'
@@ -57,6 +57,6 @@ export interface GenericFieldProps {
   name: string
 }
 
-export interface TextInputFieldProps extends GenericFieldProps, TextInputProps {
+export interface TextInputFieldProps extends GenericFieldProps {
   type?: 'email' | 'password' | 'digits' | 'name'
 }
