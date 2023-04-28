@@ -10,7 +10,7 @@ import React, {
   useState,
 } from 'react'
 
-import { Props, StateFieldRefs } from './types'
+import { FormProps, InputRef } from './types'
 import { Keyboard } from 'react-native'
 import { getInputFields } from './utils'
 import { SafeAreaView } from 'react-native'
@@ -37,9 +37,9 @@ export function Form<T extends FormikValues>({
   renderHeader,
   renderFooter,
   ...rest
-}: PropsWithChildren<Props<T>>) {
+}: PropsWithChildren<FormProps<T>>) {
   const formikRef = useRef<FormikProps<T>>(null)
-  const [fieldRefs, setFieldRefs] = useState<StateFieldRefs>([])
+  const [fieldRefs, setFieldRefs] = useState<InputRef[]>([])
 
   const inputFields = useMemo(() => getInputFields(children), [children])
 
@@ -95,15 +95,13 @@ export function Form<T extends FormikValues>({
   )
 
   useEffect(() => {
-    const updatedFieldRefs: StateFieldRefs = inputFields.map(
-      (field: { ref?: { current?: { focus?: () => void } | null } }) => {
-        const { ref } = field
-        if (ref && ref.current && ref.current.focus) {
-          return ref.current
-        }
-        return null
+    const updatedFieldRefs = inputFields.map((field: { ref?: { current?: { focus?: () => void } | null } }) => {
+      const { ref } = field
+      if (ref && ref.current) {
+        return ref.current
       }
-    )
+      return null
+    }) as InputRef[]
     setFieldRefs(updatedFieldRefs)
   }, [inputFields])
 

@@ -1,10 +1,13 @@
 import type { FormikConfig, FormikValues } from 'formik'
-import { FunctionComponent } from 'react'
+import { ElementType, ForwardRefExoticComponent, FunctionComponent, PropsWithoutRef, RefAttributes } from 'react'
 import type { ViewStyle, StyleProp } from 'react-native'
+import { NativeMethods } from 'react-native'
 import { ImageStyle } from 'react-native'
 import { TouchableOpacityProps } from 'react-native'
 import { TextStyle } from 'react-native'
 import { ImageSourcePropType } from 'react-native'
+
+export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
 export interface Styles {
   containerStyle?: StyleProp<ViewStyle>
@@ -30,7 +33,7 @@ export interface SubmitButtonProps
   onPress?: () => void
 }
 
-export interface Props<T extends FormikValues>
+export interface FormProps<T extends FormikValues>
   extends Omit<FormikConfig<T>, 'children'>,
     FormErrorProps,
     SubmitButtonProps,
@@ -43,4 +46,17 @@ export interface Props<T extends FormikValues>
   SubmitButton?: FunctionComponent<SubmitButtonProps>
 }
 
-export type StateFieldRefs = Array<{ focus?: () => void }>
+export interface InputRef extends Partial<Pick<NativeMethods, 'focus' | 'blur'>> {}
+
+export type WrappedComponentType =
+  | ElementType
+  | FunctionComponent
+  | ForwardRefExoticComponent<PropsWithoutRef<any> & RefAttributes<InputRef>>
+
+export interface GenericFieldProps {
+  name: string
+}
+
+export interface TextInputFieldProps extends GenericFieldProps {
+  type?: 'email' | 'password' | 'digits' | 'name'
+}
