@@ -1,16 +1,26 @@
-import React, { useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import * as yup from 'yup'
 import { ScrollView, StyleSheet } from 'react-native'
-import { Form, Metrics, withTextInputField } from 'react-native-formik-helper'
+import { Form, Metrics, SubmitButtonProps, withTextInputField } from 'react-native-formik-helper'
 
-import { TextInput } from './components'
+import { SubmitButton, TextInput, Props as TextInputProps } from './components'
 
-const EmailField = withTextInputField(TextInput)
-const PasswordField = withTextInputField(TextInput)
+const EmailField = withTextInputField<TextInputProps>(TextInput)
+const PasswordField = withTextInputField<TextInputProps>(TextInput)
 
 export default function App() {
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
+
+  const renderSubmitButton = useCallback(
+    ({ isLoading, disabled, onPress }: SubmitButtonProps) => (
+      <SubmitButton loading={isLoading} disabled={disabled} onPress={onPress} style={styles.submitButton}>
+        {'Submit Form'}
+      </SubmitButton>
+    ),
+    []
+  )
+
   return (
     <ScrollView keyboardShouldPersistTaps="handled" style={styles.container} contentContainerStyle={styles.content}>
       <Form<{ email: string; password: string }>
@@ -23,10 +33,10 @@ export default function App() {
           password: yup.string().min(8).max(50).required(),
         })}
         onSubmit={() => {}}
-        submitButtonTitle="Confirm"
+        SubmitButton={renderSubmitButton}
       >
-        <EmailField ref={emailRef} name="email" type="email" />
-        <PasswordField ref={passwordRef} name="password" type="password" />
+        <EmailField ref={emailRef} name="email" type="email" label="Email address" />
+        <PasswordField ref={passwordRef} name="password" type="password" label="Password" />
       </Form>
     </ScrollView>
   )
@@ -39,5 +49,8 @@ const styles = StyleSheet.create({
   content: {
     paddingVertical: Metrics.xxl,
     paddingHorizontal: Metrics.small,
+  },
+  submitButton: {
+    marginTop: Metrics.xxl,
   },
 })
