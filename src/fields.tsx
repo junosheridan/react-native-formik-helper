@@ -1,5 +1,5 @@
 import React, { Ref, forwardRef, useCallback, useMemo } from 'react'
-import { WrappedComponentType, TextInputFieldProps, InputRef } from './types'
+import { WrappedComponentType, TextInputFieldProps, InputRef, GenericFieldProps } from './types'
 import { useFormikContext } from 'formik'
 import type { TextInputProps } from 'react-native'
 
@@ -49,10 +49,10 @@ export function withTextInputField<T extends TextInputProps>(WrappedComponent: W
 
       const onChangeText = useCallback(
         (text) => {
-          setFieldValue(name, text, !isSubmitting)
+          setFieldValue(name, text)
           propOnChangeText?.(text)
         },
-        [propOnChangeText, name, setFieldValue, isSubmitting]
+        [propOnChangeText, name, setFieldValue]
       )
 
       const onBlur = useCallback(
@@ -75,4 +75,16 @@ export function withTextInputField<T extends TextInputProps>(WrappedComponent: W
       )
     }
   )
+}
+
+export function withBooleanField<T extends any>(WrappedComponent: WrappedComponentType) {
+  return ({ name, ...rest }: GenericFieldProps & T) => {
+    const { errors, values, setFieldValue } = useFormikContext<Record<string, boolean>>()
+
+    const onValueChanged = useCallback(() => {
+      setFieldValue(name, !values[name])
+    }, [setFieldValue, values, name])
+
+    return <WrappedComponent {...rest} error={errors[name]} value={values[name]} onPress={onValueChanged} />
+  }
 }
