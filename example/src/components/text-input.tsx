@@ -34,6 +34,7 @@ export const TextInput = forwardRef(
     const onBlur = useCallback(
       (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
         setFocused(false)
+        setTouched(true)
         propOnBlur?.(e)
       },
       [propOnBlur]
@@ -42,7 +43,6 @@ export const TextInput = forwardRef(
     const onFocus = useCallback(
       (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
         setFocused(true)
-        setTouched(true)
         propOnFocus?.(e)
       },
       [propOnFocus]
